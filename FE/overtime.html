@@ -1,0 +1,139 @@
+<main class="app-content">
+  <div class="app-title">
+    <div>
+      <h1><i class="bi bi-speedometer"></i> Tăng ca</h1>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="bi bi-house-door fs-6"></i></li>
+      <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+    </ul>
+  </div>
+
+  <!-- Bảng Lịch làm thêm giờ -->
+  <div class="col-md-12">
+    <div class="tile">
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Tạo lịch tăng ca
+        </button>
+      </div>
+      <div class="tile-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered table-sm" style="font-size: 12px;" id="overtimeSchedules">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Ngày làm thêm</th>
+                <th>Thời gian bắt đầu</th>
+                <th>Thời gian kết thúc</th>
+                <th>Tiền công theo giờ</th>
+                <th style="width: 10%;">Trạng thái</th>
+                <th style="width: 10%;">Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="schedule in overtimeSchedules" ng-click="goToSchedule(schedule)">
+                <td>{{$index + 1}}</td>
+                <td>{{schedule.ScheduleDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{schedule.StartTime | date:'shortTime'}}</td>
+                <td>{{schedule.EndTime | date:'shortTime'}}</td>
+                <td>{{schedule.HourlyRate | currency}}</td>
+                <td>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="statusSwitch{{$index}}"
+                      ng-model="overtimeSchedule.trangthaiChecked" ng-checked="overtimeSchedule.Status === 'Đã tạo'"
+                      ng-click="toggleStatus(overtimeSchedule)">
+                  </div>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" ng-click="openUpdateModal(schedule)"
+                    data-bs-toggle="modal" data-bs-target="#updateModal">
+                    Cập nhật
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</main>
+
+<!-- Modal thêm tăng ca-->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Tạo lịch tăng ca</h1>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Ngày làm thêm:</label>
+            <input type="date" class="form-control" placeholder="Nhập ngày làm thêm">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Thời gian bắt đầu:</label>
+            <input type="time" class="form-control" placeholder="Nhập thời gian bắt đầu">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Thời gian kết thúc:</label>
+            <input type="time" class="form-control" placeholder="Nhập thời gian kết thúc">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Tiền công:</label>
+            <input type="number" class="form-control" placeholder="Nhập tiền công">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cập nhật -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateModalLabel">Cập nhật tăng ca</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Ngày làm thêm:</label>
+            <input type="date" class="form-control" ng-model="selectedSchedule.ScheduleDate">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Thời gian bắt đầu:</label>
+            <input type="time" class="form-control" ng-model="selectedSchedule.StartTime">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Thời gian kết thúc:</label>
+            <input type="time" class="form-control" ng-model="selectedSchedule.EndTime">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Tiền công:</label>
+            <input type="number" class="form-control" ng-model="selectedSchedule.HourlyRate">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary" ng-click="updateSchedule()">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('#overtimeSchedules').DataTable();
+  });
+</script>
