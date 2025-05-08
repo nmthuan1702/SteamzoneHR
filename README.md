@@ -11,11 +11,13 @@ npm run dev - Theo dõi và biên dịch tệp nguồn.
 npm run build - Biên dịch tất cả tệp nguồn.
 Khởi động máy chủ phát triển:
 
-npm run start - Khởi động máy chủ Node.js. Lưu ý: Chỉ sử dụng cho mục đích phát triển.
-Tùy chỉnh
-Để biết thêm về cách tùy chỉnh màu sắc giao diện, vui lòng tham khảo tài liệu chính thức.
+npm run start
 Tài khoản: admin
 Password: abc123
+
+Tùy chỉnh
+Để biết thêm về cách tùy chỉnh màu sắc giao diện, vui lòng tham khảo tài liệu chính thức.
+
 Hỗ trợ RTL
 Xem tài liệu chính thức để kích hoạt hỗ trợ RTL.
 
